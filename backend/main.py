@@ -15,6 +15,24 @@ client = openai.AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 INITIA_API = os.getenv("INITIA_API", "https://lcd.testnet.initia.xyz")
 
 PROFILES: Dict[str, dict] = {}
+
+DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
+
+def load_data():
+    global POSTS, PROFILES
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, "r") as f:
+                data = json.load(f)
+                POSTS = data.get("posts", [])
+                PROFILES = data.get("profiles", {})
+        except: pass
+
+def save_data():
+    with open(DATA_FILE, "w") as f:
+        json.dump({"posts": POSTS, "profiles": PROFILES}, f)
+
+load_data()
 POSTS: List[dict] = []
 FOLLOWS: Dict[str, List[str]] = {}
 REP_CACHE: Dict[str, dict] = {}
@@ -69,6 +87,7 @@ async def get_following_feed(address: str, limit: int = 20):
 @app.post("/profile")
 async def create_profile(data: ProfileIn):
     PROFILES[data.address] = {"address": data.address, "username": data.username, "display_name": data.display_name, "bio": data.bio, "joined_at": datetime.now(timezone.utc).isoformat(), "post_count": 0}
+    save_data()
     return {"success": True, "profile": PROFILES[data.address]}
 
 @app.get("/profile/{address}")
