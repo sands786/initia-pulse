@@ -4,33 +4,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INITIA PULSE</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cpolygon points='22,3 39,12.5 39,31.5 22,41 5,31.5 5,12.5' fill='none' stroke='%230a0a08' stroke-width='1.5'/%3E%3Cpolyline points='2,22 9,22 12,13 15,31 18,16 21,24 25,22 35,22 38,22 42,22' fill='none' stroke='%23c4451a' stroke-width='2.2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--ink:#0a0a08;--paper:#f5f0e8;--cream:#ede8dc;--warm:#e8e0cc;--rule:#c8bfa8;--muted:#8a7f6a;--accent:#c4451a;--accent2:#1a6e3c;--link:#1a3a6e;--mono:'Geist Mono',monospace;--serif:'Instrument Serif',Georgia,serif;--sans:'Geist',system-ui,sans-serif}
+:root{
+  --ink:#0a0a08;--paper:#f5f0e8;--cream:#ede8dc;--warm:#e8e0cc;--rule:#c8bfa8;
+  --muted:#8a7f6a;--accent:#c4451a;--accent2:#1a6e3c;--link:#1a3a6e;
+  --mono:'Geist Mono',monospace;--serif:'Instrument Serif',Georgia,serif;--sans:'Geist',system-ui,sans-serif
+}
 html{font-size:16px}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;min-height:100vh}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;min-height:100vh;overflow-x:hidden}
+
+/* ══ INTRO LOADER ══ */
+#intro-loader{
+  position:fixed;inset:0;background:var(--ink);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  animation:loader-exit .5s ease 2.8s forwards;
+}
+#intro-loader .intro-logo{
+  font-family:var(--serif);font-size:clamp(36px,8vw,72px);font-style:italic;
+  color:var(--paper);letter-spacing:.02em;
+  opacity:0;transform:translateY(16px);
+  animation:intro-rise .7s cubic-bezier(.22,1,.36,1) .3s forwards;
+}
+#intro-loader .intro-logo span{color:var(--accent)}
+#intro-loader .intro-tagline{
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);margin-top:10px;
+  opacity:0;animation:intro-rise .5s ease .9s forwards;
+}
+#intro-loader .intro-bar{
+  width:160px;height:1px;background:#222;margin-top:36px;overflow:hidden;
+  opacity:0;animation:intro-rise .3s ease 1.1s forwards;
+}
+#intro-loader .intro-bar-fill{
+  height:100%;width:0;background:var(--accent);
+  animation:bar-fill 1.4s ease 1.2s forwards;
+}
+#intro-loader .intro-edition{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:#333;margin-top:14px;
+  opacity:0;animation:intro-rise .4s ease 1.3s forwards;
+}
+@keyframes intro-rise{to{opacity:1;transform:translateY(0)}}
+@keyframes bar-fill{to{width:100%}}
+@keyframes loader-exit{to{opacity:0;pointer-events:none;visibility:hidden}}
+
+/* ══ APP (fades in after loader) ══ */
+#app{opacity:0;animation:app-appear .6s ease 2.9s forwards}
+@keyframes app-appear{to{opacity:1}}
+
+/* ══ MASTHEAD ══ */
 .masthead{border-bottom:3px double var(--ink);position:sticky;top:0;background:var(--paper);z-index:100}
 .masthead-top{display:flex;align-items:center;justify-content:space-between;padding:10px 28px 0;border-bottom:1px solid var(--rule)}
 .masthead-dateline{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.masthead-logo{font-family:var(--serif);font-size:42px;font-style:italic;line-height:1;color:var(--ink);text-align:center;padding:6px 0 8px}
+.masthead-center{text-align:center;flex:1}
+.masthead-logo{font-family:var(--serif);font-size:42px;font-style:italic;line-height:1;color:var(--ink);padding:6px 0 4px}
 .masthead-logo span{color:var(--accent)}
-.masthead-tagline{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);text-align:center;padding-bottom:10px}
+.masthead-tagline{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);padding-bottom:10px}
 .masthead-nav{display:flex;border-top:1px solid var(--rule);overflow-x:auto}
 .nav-tab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;cursor:pointer;color:var(--muted);transition:all .15s;white-space:nowrap;border:none;background:none;border-right:1px solid var(--rule)}
 .nav-tab:hover,.nav-tab.active{background:var(--ink);color:var(--paper)}
+
+/* ══ TICKER ══ */
 .ticker-bar{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 0;overflow:hidden;white-space:nowrap}
 .ticker-inner{display:inline-block;animation:scroll-ticker 28s linear infinite}
 @keyframes scroll-ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ticker-sep{color:var(--accent);margin:0 16px}
-.layout{display:grid;grid-template-columns:1fr 460px 260px;max-width:1240px;margin:0 auto}
-@media(max-width:1000px){.layout{grid-template-columns:1fr 300px}.sidebar-right{display:none}}
+
+/* ══ LAYOUT ══ */
+.layout{display:grid;grid-template-columns:280px 1fr 260px;max-width:1280px;margin:0 auto}
+@media(max-width:1080px){.layout{grid-template-columns:260px 1fr}.sidebar-right{display:none}}
 @media(max-width:680px){.layout{grid-template-columns:1fr}.sidebar-left{display:none}}
-.sidebar-left{border-right:1px solid var(--rule);padding:20px}
-.sidebar-section-title{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
-.wallet-card{background:var(--ink);color:var(--paper);border-radius:2px;padding:14px;margin-bottom:16px}
-.wallet-addr{font-family:var(--mono);font-size:10px;color:var(--rule);margin-bottom:6px;word-break:break-all}
+
+/* ══ SECTION DIVIDER ══ */
+.section-divider{
+  font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--muted);padding:9px 0 8px;margin-bottom:12px;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:8px;margin-top:6px
+}
+.sidebar-left .section-divider:first-child{margin-top:0;border-top:none}
+
+/* ══ LEFT SIDEBAR ══ */
+.sidebar-left{border-right:1px solid var(--rule);padding:20px;display:flex;flex-direction:column}
+
+/* Wallet card */
+.wallet-card{background:var(--ink);color:var(--paper);border-radius:2px;padding:14px;margin-bottom:10px;position:relative}
+.wallet-addr{font-family:var(--mono);font-size:9px;color:var(--rule);margin-bottom:6px;word-break:break-all;line-height:1.5}
 .wallet-username{font-family:var(--serif);font-size:22px;font-style:italic;color:var(--paper);margin-bottom:4px}
 .wallet-username span{color:var(--accent)}
 .rep-badge{display:inline-block;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:2px 8px;border:1px solid var(--accent);color:var(--accent);border-radius:1px;margin-top:6px}
@@ -39,16 +102,42 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weigh
 .session-pill{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;color:var(--muted)}
 .session-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .session-dot.active{background:var(--accent2);box-shadow:0 0 6px var(--accent2)}
-.post-input-wrap{border:1px solid var(--rule);border-radius:2px;background:var(--cream);padding:12px;margin-bottom:16px}
+.btn-disconnect{
+  position:absolute;top:10px;right:10px;
+  font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:.08em;
+  padding:3px 8px;background:transparent;color:#555;
+  border:1px solid #2a2a28;border-radius:1px;cursor:pointer;transition:all .15s
+}
+.btn-disconnect:hover{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+
+/* Compose */
+.post-input-wrap{border:1px solid var(--rule);border-radius:2px;background:var(--cream);padding:12px;margin-bottom:10px}
 .post-textarea{width:100%;min-height:80px;background:transparent;border:none;outline:none;font-family:var(--serif);font-size:15px;color:var(--ink);resize:none;line-height:1.55}
 .post-textarea::placeholder{color:var(--muted);font-style:italic}
 .post-meta-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)}
 .post-counter{font-family:var(--mono);font-size:10px;color:var(--muted)}
 .post-counter.warn{color:var(--accent)}
+.post-type-row{font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.1em;display:flex;gap:14px;align-items:center}
+.post-type-row label{display:flex;align-items:center;gap:4px;cursor:pointer}
 .btn-publish{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:5px 14px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px;transition:background .15s}
 .btn-publish:hover{background:var(--accent)}
-.connect-btn{width:100%;padding:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px;margin-bottom:16px;transition:background .15s}
+.connect-btn{width:100%;padding:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px;margin-bottom:10px;transition:background .15s}
 .connect-btn:hover{background:var(--link)}
+.btn-session{width:100%;padding:8px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--accent2);color:var(--paper);border:none;cursor:pointer;border-radius:1px;margin-bottom:14px;transition:background .15s}
+.btn-session:hover{background:#145c31}
+
+/* Lookup */
+.lookup-wrap{display:flex;gap:6px;margin-bottom:14px}
+.lookup-input{flex:1;font-family:var(--mono);font-size:11px;padding:7px 10px;border:1px solid var(--rule);background:var(--cream);color:var(--ink);outline:none;border-radius:1px}
+.lookup-input:focus{border-color:var(--ink)}
+.lookup-btn{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:7px 12px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px;transition:background .15s}
+.lookup-btn:hover{background:var(--accent)}
+
+/* Trending */
+.trending-tag{display:inline-block;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--rule);margin:3px 3px 3px 0;cursor:pointer;color:var(--muted);border-radius:1px;transition:all .12s}
+.trending-tag:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ══ MAIN FEED ══ */
 .main-feed{border-right:1px solid var(--rule);min-height:100vh}
 .feed-header{display:flex;align-items:baseline;justify-content:space-between;padding:16px 20px 12px;border-bottom:2px solid var(--ink)}
 .feed-headline{font-family:var(--serif);font-size:26px;font-style:italic}
@@ -72,7 +161,15 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weigh
 .post-footer{display:flex;gap:16px;margin-top:8px}
 .post-action{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);cursor:pointer;border:none;background:none;padding:0;transition:color .12s}
 .post-action:hover{color:var(--ink)}
-.sidebar-right{padding:20px 18px}
+.post-action.liked{color:var(--accent);font-weight:500}
+.post-action.liked:hover{color:var(--accent)}
+.like-count{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:2px;transition:color .12s}
+.post-action.liked + .like-count{color:var(--accent)}
+.load-more-wrap{text-align:center;padding:20px;border-top:1px solid var(--rule)}
+
+/* ══ RIGHT SIDEBAR ══ */
+.sidebar-right{padding:20px 18px;display:flex;flex-direction:column}
+.sidebar-right .section-divider:first-child{margin-top:0;border-top:none}
 .leaderboard-row{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .1s;border-radius:2px}
 .leaderboard-row:hover{background:var(--cream)}
 .lb-rank{font-family:var(--mono);font-size:11px;color:var(--muted);width:18px;text-align:right;flex-shrink:0}
@@ -81,106 +178,216 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weigh
 .lb-name{font-family:var(--serif);font-size:14px;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lb-score{font-family:var(--mono);font-size:9px;color:var(--muted)}
 .lb-badge-small{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:.08em;padding:1px 5px;border:1px solid var(--accent);color:var(--accent);border-radius:1px;flex-shrink:0}
-.lookup-wrap{display:flex;gap:6px;margin-bottom:16px}
-.lookup-input{flex:1;font-family:var(--mono);font-size:11px;padding:7px 10px;border:1px solid var(--rule);background:var(--cream);color:var(--ink);outline:none;border-radius:1px}
-.lookup-input:focus{border-color:var(--ink)}
-.lookup-btn{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:7px 12px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px}
+.rep-card{border:1px solid var(--rule);border-radius:2px;padding:14px;background:var(--cream);margin-bottom:6px}
+.rep-summary{font-family:var(--serif);font-size:13px;font-style:italic;line-height:1.6;color:var(--ink);margin-top:8px}
+.trait-chip{display:inline-block;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;background:var(--ink);color:var(--paper);border-radius:1px;margin:2px 2px 2px 0}
+.stats-box{border:1px solid var(--rule);border-radius:2px;padding:12px;background:var(--cream)}
+.stats-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px}
+.stats-row:last-child{border-bottom:none}
+.stats-label{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:9px}
+.stats-value{color:var(--ink);font-weight:500}
+.stats-live{color:var(--accent2)}
+.stats-offline{color:var(--accent)}
+
+/* ══ MODALS ══ */
+.modal-backdrop{position:fixed;inset:0;background:rgba(10,10,8,.65);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.modal{background:var(--paper);border:1px solid var(--rule);max-width:460px;width:100%;padding:28px;border-radius:2px;animation:modal-in .2s ease}
+@keyframes modal-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.modal-title{font-family:var(--serif);font-size:24px;font-style:italic;margin-bottom:4px}
+.modal-sub{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.field-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:5px}
+.field-input{width:100%;font-family:var(--mono);font-size:12px;padding:9px 11px;border:1px solid var(--rule);background:var(--cream);color:var(--ink);outline:none;border-radius:1px;margin-bottom:14px}
+.field-input:focus{border-color:var(--ink)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+.btn-secondary{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:8px 16px;border:1px solid var(--rule);background:none;cursor:pointer;border-radius:1px;color:var(--muted);transition:all .12s}
+.btn-secondary:hover{border-color:var(--ink);color:var(--ink)}
+.btn-primary{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:8px 16px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px;transition:background .12s}
+.btn-primary:hover{background:var(--accent)}
+
+/* ══ TOAST ══ */
 .toast-container{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:999}
 .toast{font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:10px 16px;background:var(--ink);color:var(--paper);border-radius:2px;max-width:320px;animation:toast-in .2s ease;border-left:3px solid var(--accent)}
 .toast.success{border-left-color:var(--accent2)}
 @keyframes toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 .empty-state{padding:48px 24px;text-align:center;font-family:var(--serif);font-size:18px;font-style:italic;color:var(--muted)}
 .empty-state small{display:block;font-family:var(--mono);font-size:10px;margin-top:6px;color:var(--rule);font-style:normal}
-.modal-backdrop{position:fixed;inset:0;background:rgba(10,10,8,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--paper);border:1px solid var(--rule);max-width:460px;width:100%;padding:28px;border-radius:2px;animation:modal-in .2s ease}
-@keyframes modal-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-.modal-title{font-family:var(--serif);font-size:24px;font-style:italic;margin-bottom:6px}
-.modal-sub{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
-.field-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:5px}
-.field-input{width:100%;font-family:var(--mono);font-size:12px;padding:9px 11px;border:1px solid var(--rule);background:var(--cream);color:var(--ink);outline:none;border-radius:1px;margin-bottom:14px}
-.field-input:focus{border-color:var(--ink)}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
-.btn-secondary{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:8px 16px;border:1px solid var(--rule);background:none;cursor:pointer;border-radius:1px;color:var(--muted)}
-.btn-primary{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:8px 16px;background:var(--ink);color:var(--paper);border:none;cursor:pointer;border-radius:1px}
-.rep-summary{font-family:var(--serif);font-size:13px;font-style:italic;line-height:1.6;color:var(--ink);margin-top:8px}
-.trait-chip{display:inline-block;font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;background:var(--ink);color:var(--paper);border-radius:1px;margin:2px 2px 2px 0}
-.rep-card{border:1px solid var(--rule);border-radius:2px;padding:14px;background:var(--cream);margin-bottom:16px}
-.trending-tag{display:inline-block;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--rule);margin:3px 3px 3px 0;cursor:pointer;color:var(--muted);border-radius:1px;transition:all .12s}
-.trending-tag:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+#loader{position:fixed;inset:0;background:var(--ink);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s ease,visibility .6s ease;}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-logo{font-family:var(--serif);font-size:clamp(36px,7vw,72px);font-style:italic;color:var(--paper);letter-spacing:.02em;animation:logo-reveal 1s ease both;}
+.loader-logo span{color:var(--accent);}
+.loader-tagline{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:var(--muted);animation:logo-reveal .8s .4s ease both;}
+.loader-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;animation:logo-reveal .6s .6s ease both;}
+.loader-bar{height:100%;width:0;background:var(--accent);animation:load-progress 2s .5s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes logo-reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes load-progress{0%{width:0}60%{width:75%}100%{width:100%}}
+#app{opacity:0;transition:opacity .5s ease;}
+#app.visible{opacity:1;}
+.btn-danger-full{background:none;border:1px solid var(--accent);color:var(--accent);width:100%;padding:9px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:1px;transition:all .15s;margin-top:6px;}
+.btn-danger-full:hover{background:var(--accent);color:var(--paper);}
+.wallet-pill{display:flex;align-items:center;gap:8px;padding:4px 10px;border:1px solid var(--rule);border-radius:2px;background:var(--cream);font-family:var(--mono);font-size:10px;color:var(--ink);}
+.wallet-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 5px var(--accent2);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-item{border:1px solid var(--rule);border-radius:2px;padding:10px;background:var(--cream);font-family:var(--mono);font-size:9px;text-align:center;}
+.stat-value{font-size:18px;font-weight:500;color:var(--ink);display:block;margin-bottom:2px;}
+.stat-label{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.status-live{color:var(--accent2)!important;}
+.status-offline{color:var(--accent)!important;}
+.section-divider{border:none;border-top:1px solid var(--rule);margin:4px 0;}
 </style>
 </head>
 <body>
-<header class="masthead">
-  <div class="masthead-top">
-    <div class="masthead-dateline" id="dateline">Vol. I — Initia Testnet</div>
-    <div style="text-align:center;flex:1;">
-      <div class="masthead-logo">INITIA <span>PULSE</span></div>
-      <div class="masthead-tagline">The On-Chain Social Layer for the Interwoven Web</div>
+<div id="loader">
+  <div class="loader-logo">INITIA <span>PULSE</span></div>
+  <div class="loader-tagline">The On-Chain Social Layer</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+<div id="app">
+
+<!-- ══ INTRO LOADER ══ -->
+<div id="intro-loader">
+  <div class="intro-logo">INITIA <span>PULSE</span></div>
+  <div class="intro-tagline">The On-Chain Social Layer</div>
+  <div class="intro-bar"><div class="intro-bar-fill"></div></div>
+  <div class="intro-edition">Vol. I &middot; Initia Testnet &middot; Initialising...</div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <header class="masthead">
+    <div class="masthead-top">
+      <div class="masthead-dateline" id="dateline">Vol. I — Initia Testnet</div>
+      <div class="masthead-center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+          <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
+  <polygon points="22,3 39,12.5 39,31.5 22,41 5,31.5 5,12.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <polygon points="22,9 34,15.5 34,28.5 22,35 10,28.5 10,15.5" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+  <polyline points="2,22 9,22 12,13 15,31 18,16 21,24 25,22 35,22 38,22 42,22" fill="none" stroke="#c4451a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+          <div class="masthead-logo">INITIA <span>PULSE</span></div>
+          <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;transform:scaleX(-1);">
+  <polygon points="22,3 39,12.5 39,31.5 22,41 5,31.5 5,12.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <polygon points="22,9 34,15.5 34,28.5 22,35 10,28.5 10,15.5" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+  <polyline points="2,22 9,22 12,13 15,31 18,16 21,24 25,22 35,22 38,22 42,22" fill="none" stroke="#c4451a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
+        </div>
+        <div class="masthead-tagline">The On-Chain Social Layer for the Interwoven Web</div>
+      </div>
+      <div class="masthead-dateline" id="live-stats">0 posts · 0 wallets</div><div id="header-wallet" style="display:flex;align-items:center;"></div>
     </div>
-    <div class="masthead-dateline" id="live-stats">0 posts · 0 wallets</div>
+    <nav class="masthead-nav">
+      <button class="nav-tab active" onclick="switchTab('feed',this)">Global Feed</button>
+      <button class="nav-tab" onclick="switchTab('following',this)">Following</button>
+      <button class="nav-tab" onclick="switchTab('leaderboard',this)">Leaderboard</button>
+      <button class="nav-tab" onclick="switchTab('activity',this)">My Activity</button>
+      <button class="nav-tab" onclick="showRepModal()">Get Reputation</button>
+    </nav>
+  </header>
+
+  <div class="ticker-bar">
+    <div class="ticker-inner">
+      <span>INITIA PULSE — The On-Chain Social Layer</span><span class="ticker-sep">◆</span>
+      <span>Connect your wallet to start posting</span><span class="ticker-sep">◆</span>
+      <span>Reputation scores powered by AI</span><span class="ticker-sep">◆</span>
+      <span>Build your on-chain identity</span><span class="ticker-sep">◆</span>
+      <span>INITIA PULSE — The On-Chain Social Layer</span><span class="ticker-sep">◆</span>
+      <span>Connect your wallet to start posting</span><span class="ticker-sep">◆</span>
+      <span>Reputation scores powered by AI</span><span class="ticker-sep">◆</span>
+      <span>Build your on-chain identity</span><span class="ticker-sep">◆</span>
+    </div>
   </div>
-  <nav class="masthead-nav">
-    <button class="nav-tab active" onclick="switchTab('feed',this)">Global Feed</button>
-    <button class="nav-tab" onclick="switchTab('following',this)">Following</button>
-    <button class="nav-tab" onclick="switchTab('leaderboard',this)">Leaderboard</button>
-    <button class="nav-tab" onclick="switchTab('activity',this)">My Activity</button>
-    <button class="nav-tab" onclick="showRepModal()">Get Reputation</button>
-  </nav>
-</header>
-<div class="ticker-bar"><div class="ticker-inner" id="ticker"><span>INITIA PULSE — The On-Chain Social Layer</span><span class="ticker-sep">◆</span><span>Connect your wallet to start posting</span><span class="ticker-sep">◆</span><span>Reputation scores powered by AI</span><span class="ticker-sep">◆</span><span>INITIA PULSE — The On-Chain Social Layer</span><span class="ticker-sep">◆</span><span>Connect your wallet to start posting</span><span class="ticker-sep">◆</span><span>Reputation scores powered by AI</span><span class="ticker-sep">◆</span></div></div>
-<div class="layout">
-  <aside class="sidebar-left">
-    <div id="wallet-section"><button class="connect-btn" onclick="connectWallet()">Connect Wallet</button></div>
-    <div id="compose-section" style="display:none;">
-      <div class="post-input-wrap">
-        <textarea class="post-textarea" id="post-content" placeholder="What's happening on-chain?" maxlength="280" oninput="updateCounter()"></textarea>
-        <div class="post-meta-row">
-          <span class="post-counter" id="post-counter">280</span>
-          <button class="btn-publish" id="publish-btn" onclick="publishPost()">Publish</button>
+
+  <div class="layout">
+
+    <!-- ── LEFT SIDEBAR ── -->
+    <aside class="sidebar-left">
+
+      <div class="section-divider">Wallet</div>
+      <div id="wallet-section">
+        <button class="connect-btn" onclick="connectWallet()">⬡ Connect Wallet</button>
+      </div>
+
+      <div id="compose-section" style="display:none;">
+        <div class="section-divider">Compose</div>
+        <div class="post-input-wrap">
+          <textarea class="post-textarea" id="post-content" placeholder="What's happening on-chain?" maxlength="280" oninput="updateCounter()"></textarea>
+          <div class="post-meta-row">
+            <span class="post-counter" id="post-counter">280</span>
+            <button class="btn-publish" id="publish-btn" onclick="publishPost()">Publish</button>
+          </div>
+        </div>
+        <div class="post-type-row">
+          Type:
+          <label><input type="radio" name="ptype" value="text" checked> Text</label>
+          <label><input type="radio" name="ptype" value="milestone"> Milestone</label>
         </div>
       </div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em;">
-        Type: <label><input type="radio" name="ptype" value="text" checked> Text</label> &nbsp;
-        <label><input type="radio" name="ptype" value="milestone"> Milestone</label>
+
+      <div class="section-divider">Quick Lookup</div>
+      <div class="lookup-wrap">
+        <input class="lookup-input" id="lookup-input" placeholder="address or .init" />
+        <button class="lookup-btn" onclick="lookupProfile()">Go</button>
       </div>
-    </div>
-    <div class="sidebar-section-title">Quick Lookup</div>
-    <div class="lookup-wrap">
-      <input class="lookup-input" id="lookup-input" placeholder="address or .init" />
-      <button class="lookup-btn" onclick="lookupProfile()">Go</button>
-    </div>
-    <div class="sidebar-section-title">Trending</div>
-    <div>
-      <span class="trending-tag">#DeFi</span>
-      <span class="trending-tag">#Bridge</span>
-      <span class="trending-tag">#Gaming</span>
-      <span class="trending-tag">#Staking</span>
-    </div>
-  </aside>
-  <main class="main-feed">
-    <div class="feed-header">
-      <div class="feed-headline">Latest Dispatches</div>
-      <div class="feed-count" id="feed-count">— posts</div>
-    </div>
-    <div class="filter-row">
-      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('text',this)">Text</button>
-      <button class="filter-btn" onclick="setFilter('activity',this)">Activity</button>
-      <button class="filter-btn" onclick="setFilter('milestone',this)">Milestones</button>
-    </div>
-    <div id="feed-container"><div class="empty-state">The feed awaits its first dispatch.<small>Connect your wallet and post to begin.</small></div></div>
-    <div style="text-align:center;padding:20px;"><button class="lookup-btn" id="load-more-btn" onclick="loadMore()" style="display:none;">Load More</button></div>
-  </main>
-  <aside class="sidebar-right">
-    <div class="sidebar-section-title">Reputation Leaderboard</div>
-    <div id="leaderboard-list"><div style="font-family:var(--mono);font-size:10px;color:var(--muted);">No scores yet.</div></div>
-    <div class="sidebar-section-title" style="margin-top:20px;">My Reputation</div>
-    <div id="rep-card-container"><div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Connect wallet to see score.</div></div>
-    <div class="sidebar-section-title" style="margin-top:20px;">Network Stats</div>
-    <div id="network-stats" style="font-family:var(--mono);font-size:10px;color:var(--muted);line-height:2;">Loading...</div>
-  </aside>
+
+      <div class="section-divider">Trending</div>
+      <div>
+        <span class="trending-tag">#DeFi</span>
+        <span class="trending-tag">#Bridge</span>
+        <span class="trending-tag">#Gaming</span>
+        <span class="trending-tag">#Staking</span>
+      </div>
+
+    </aside>
+
+    <!-- ── MAIN FEED ── -->
+    <main class="main-feed">
+      <div class="feed-header">
+        <div class="feed-headline">Latest Dispatches</div>
+        <div class="feed-count" id="feed-count">— posts</div>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" onclick="setFilter('text',this)">Text</button>
+        <button class="filter-btn" onclick="setFilter('activity',this)">Activity</button>
+        <button class="filter-btn" onclick="setFilter('milestone',this)">Milestones</button>
+      </div>
+      <div id="feed-container">
+        <div class="empty-state">The feed awaits its first dispatch.<small>Connect your wallet and post to begin.</small></div>
+      </div>
+      <div class="load-more-wrap">
+        <button class="lookup-btn" id="load-more-btn" onclick="loadMore()" style="display:none;">Load More</button>
+      </div>
+    </main>
+
+    <!-- ── RIGHT SIDEBAR ── -->
+    <aside class="sidebar-right">
+
+      <div class="section-divider">Reputation Leaderboard</div>
+      <div id="leaderboard-list">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">No scores yet.</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:14px;">My Reputation</div>
+      <div id="rep-card-container">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Connect wallet to see score.</div>
+      </div>
+
+      <div class="section-divider" style="margin-top:14px;">Network Stats</div>
+      <div class="stats-box">
+        <div class="stats-row"><span class="stats-label">Chain</span><span class="stats-value" id="s-chain">—</span></div>
+        <div class="stats-row"><span class="stats-label">Posts</span><span class="stats-value" id="s-posts">—</span></div>
+        <div class="stats-row"><span class="stats-label">Profiles</span><span class="stats-value" id="s-profiles">—</span></div>
+        <div class="stats-row"><span class="stats-label">Status</span><span class="stats-value" id="s-status">Loading...</span></div>
+      </div>
+
+    </aside>
+  </div>
 </div>
+
+</div><!-- /#app -->
 <div class="toast-container" id="toast-container"></div>
+
+<!-- ══ PROFILE MODAL ══ -->
 <div class="modal-backdrop" id="profile-modal" style="display:none;">
   <div class="modal">
     <div class="modal-title">Create your Profile</div>
@@ -197,60 +404,359 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weigh
     </div>
   </div>
 </div>
+
+<!-- ══ REPUTATION MODAL ══ -->
 <div class="modal-backdrop" id="rep-modal" style="display:none;">
   <div class="modal">
     <div class="modal-title">Reputation Engine</div>
     <div class="modal-sub">AI-powered on-chain identity scoring</div>
     <div class="field-label">Wallet Address</div>
     <input class="field-input" id="rep-addr-input" placeholder="init1... or .init username" />
-    <div id="rep-result" style="display:none;"><div style="border-top:1px solid var(--rule);padding-top:14px;margin-top:4px;"><div id="rep-output"></div></div></div>
+    <div id="rep-result" style="display:none;">
+      <div style="border-top:1px solid var(--rule);padding-top:14px;margin-top:4px;">
+        <div id="rep-output"></div>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('rep-modal')">Close</button>
       <button class="btn-primary" onclick="computeRep()">Analyse Wallet</button>
     </div>
   </div>
 </div>
+
 <script>
-const API='https://e2b3-154-80-36-248.ngrok-free.app'
-const NGROK_HEADER = {'ngrok-skip-browser-warning': '1'};;
+
+window.addEventListener('load',function(){setTimeout(function(){document.getElementById('loader').classList.add('hidden');document.getElementById('app').classList.add('visible');},2600);});
+function disconnectWallet(){wallet=null;profile=null;sessionActive=false;document.getElementById('wallet-section').innerHTML='<button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>';document.getElementById('compose-section').style.display='none';document.getElementById('header-wallet').innerHTML='';document.getElementById('rep-card-container').innerHTML='<div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Connect wallet to see score.</div>';toast('Wallet disconnected','info');loadFeed(true);}
+const API='https://e2b3-154-80-36-248.ngrok-free.app';
 const CHAIN_ID='initia-pulse-1';
-let wallet=null,profile=null,posts=[],currentFilter='all',currentOffset=0,sessionActive=false;
-document.addEventListener('DOMContentLoaded',()=>{updateDateline();loadFeed();loadLeaderboard();loadNetworkStats();setInterval(loadFeed,18000);setInterval(loadLeaderboard,60000);setInterval(updateDateline,30000);});
-function updateDateline(){const n=new Date();document.getElementById('dateline').textContent=`Vol. I — Initia Testnet · ${n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}`;}
-async function connectWallet(){
-  if(window.keplr){try{await window.keplr.experimentalSuggestChain({chainId:CHAIN_ID,chainName:'Initia Pulse Testnet',rpc:'http://localhost:26657',rest:'http://localhost:1317',bip44:{coinType:118},bech32Config:{bech32PrefixAccAddr:'init',bech32PrefixAccPub:'initpub',bech32PrefixValAddr:'initvaloper',bech32PrefixValPub:'initvaloperpub',bech32PrefixConsAddr:'initvalcons',bech32PrefixConsPub:'initvalconspub'},currencies:[{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6}],feeCurrencies:[{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6}],stakeCurrency:{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6},gasPriceStep:{low:0.01,average:0.025,high:0.04}});await window.keplr.enable(CHAIN_ID);const k=await window.keplr.getKey(CHAIN_ID);wallet={address:k.bech32Address,name:k.name};toast('Wallet connected: '+short(wallet.address),'success');onWalletConnected();return;}catch(e){toast('Keplr error: '+e.message,'error');console.error(e);}}
-  wallet={address:'init1'+randomHex(38),name:'Demo Wallet',demo:true};
-  toast('Demo mode — no wallet detected','error');onWalletConnected();
+let wallet=null,profile=null,posts=[],currentFilter='all',currentOffset=0,sessionActive=false,likedPosts=new Set();
+
+document.addEventListener('DOMContentLoaded',()=>{
+  updateDateline();loadFeed();loadLeaderboard();loadNetworkStats();
+  setInterval(loadFeed,18000);setInterval(loadLeaderboard,60000);setInterval(updateDateline,30000);
+});
+
+function updateDateline(){
+  const n=new Date();
+  document.getElementById('dateline').textContent=`Vol. I — Initia Testnet · ${n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}`;
 }
-async function onWalletConnected(){renderWalletCard();document.getElementById('compose-section').style.display='block';document.getElementById('rep-addr-input').value=wallet.address;try{const r=await fetch(`${API}/profile/${wallet.address}`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });if(r.ok){profile=await r.json();updateRepCard(profile.reputation);}else{document.getElementById('m-display').value=wallet.name||'';document.getElementById('profile-modal').style.display='flex';}}catch(e){document.getElementById('profile-modal').style.display='flex';}computeRepFor(wallet.address);}
-function renderWalletCard(){const username=profile?.username||wallet.name||'anon.init';const score=profile?.reputation?.score||0;const rank=profile?.reputation?.rank||'Newcomer';document.getElementById('wallet-section').innerHTML=`<div class="wallet-card"><div class="wallet-addr">${wallet.address}</div><div class="wallet-username">${username.replace('.init','')}<span>.init</span></div><div class="rep-badge">${rank}</div><div class="rep-score">${score}<span> / 1000</span></div><div class="session-pill"><span class="session-dot ${sessionActive?'active':''}"></span>${sessionActive?'Auto-sign active':'Auto-sign off'}</div></div><button class="connect-btn" style="background:var(--accent2);" onclick="startSession()">Start Auto-Sign Session</button>`;}
+
+/* ── WALLET ── */
+async function connectWallet(){
+  if(window.keplr){
+    try{
+      await window.keplr.experimentalSuggestChain({
+        chainId:CHAIN_ID,chainName:'Initia Pulse Testnet',
+        rpc:'http://localhost:26657',rest:'http://localhost:1317',
+        bip44:{coinType:118},
+        bech32Config:{bech32PrefixAccAddr:'init',bech32PrefixAccPub:'initpub',bech32PrefixValAddr:'initvaloper',bech32PrefixValPub:'initvaloperpub',bech32PrefixConsAddr:'initvalcons',bech32PrefixConsPub:'initvalconspub'},
+        currencies:[{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6}],
+        feeCurrencies:[{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6}],
+        stakeCurrency:{coinDenom:'INIT',coinMinimalDenom:'uinit',coinDecimals:6},
+        gasPriceStep:{low:0.01,average:0.025,high:0.04}
+      });
+      await window.keplr.enable(CHAIN_ID);
+      const k=await window.keplr.getKey(CHAIN_ID);
+      wallet={address:k.bech32Address,name:k.name};
+      toast('Wallet connected: '+short(wallet.address),'success');
+      onWalletConnected();return;
+    }catch(e){toast('Keplr error: '+e.message,'error');console.error(e);}
+  }
+  wallet={address:'init1'+randomHex(38),name:'Demo Wallet',demo:true};
+  toast('Demo mode — no wallet detected','error');
+  onWalletConnected();
+}
+
+function disconnectWallet(){
+  wallet=null;profile=null;sessionActive=false;
+  document.getElementById('wallet-section').innerHTML=`<button class="connect-btn" onclick="connectWallet()">⬡ Connect Wallet</button>`;
+  document.getElementById('compose-section').style.display='none';
+  document.getElementById('rep-card-container').innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Connect wallet to see score.</div>`;
+  toast('Wallet disconnected','info');
+}
+
+async function onWalletConnected(){
+  renderWalletCard();
+  document.getElementById('compose-section').style.display='block';
+  document.getElementById('rep-addr-input').value=wallet.address;
+  try{
+    const r=await fetch(`${API}/profile/${wallet.address}`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    if(r.ok){profile=await r.json();updateRepCard(profile.reputation);}
+    else{document.getElementById('m-display').value=wallet.name||'';document.getElementById('profile-modal').style.display='flex';}
+  }catch(e){document.getElementById('profile-modal').style.display='flex';}
+  computeRepFor(wallet.address);
+}
+
+function renderWalletCard(){
+  const username=profile?.username||wallet.name||'anon.init';
+  const score=profile?.reputation?.score||0;
+  const rank=profile?.reputation?.rank||'Newcomer';
+  document.getElementById('wallet-section').innerHTML=`
+    <div class="wallet-card">
+      <button class="btn-disconnect" onclick="disconnectWallet()">✕ Disconnect</button>
+      <div class="wallet-addr">${wallet.address}</div>
+      <div class="wallet-username">${username.replace('.init','')}<span>.init</span></div>
+      <div class="rep-badge">${rank}</div>
+      <div class="rep-score">${score}<span> / 1000</span></div>
+      <div class="session-pill">
+        <span class="session-dot ${sessionActive?'active':''}"></span>
+        ${sessionActive?'Auto-sign active':'Auto-sign off'}
+      </div>
+    </div>
+    <button class="btn-session" onclick="startSession()">▶ Start Auto-Sign Session</button>`;
+}
+
 function startSession(){sessionActive=true;renderWalletCard();toast('Auto-signing session started — 24h','success');}
-async function createProfile(){const username=document.getElementById('m-username').value.trim().replace('.init','')+'.init';const display=document.getElementById('m-display').value.trim();const bio=document.getElementById('m-bio').value.trim();if(!display){toast('Display name required','error');return;}try{const r=await fetch(`${API}/profile`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({address:wallet.address,username,display_name:display,bio})});profile=(await r.json()).profile;closeModal('profile-modal');renderWalletCard();toast(`Profile created: ${username}`,'success');publishActivityPost(`Joined Initia Pulse as ${username}`,'milestone');}catch(e){toast('Failed to create profile','error');}}
-async function loadFeed(reset=false){if(reset){currentOffset=0;posts=[];}try{const r=await fetch(`${API}/feed?limit=20&offset=${currentOffset}&filter=${currentFilter}`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });const data=await r.json();if(reset||currentOffset===0)posts=data.posts;else posts=[...posts,...data.posts];renderFeed();document.getElementById('feed-count').textContent=`${data.total} posts`;document.getElementById('live-stats').textContent=`${data.total} posts`;document.getElementById('load-more-btn').style.display=data.has_more?'inline-block':'none';}catch(e){document.getElementById('feed-container').innerHTML='<div class="empty-state">Could not reach backend.<small>Make sure uvicorn is running on port 8000.</small></div>';}}
+
+/* ── PROFILE ── */
+async function createProfile(){
+  const username=document.getElementById('m-username').value.trim().replace('.init','')+'.init';
+  const display=document.getElementById('m-display').value.trim();
+  const bio=document.getElementById('m-bio').value.trim();
+  if(!display){toast('Display name required','error');return;}
+  try{
+    const r=await fetch(`${API}/profile`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({address:wallet.address,username,display_name:display,bio})});
+    profile=(await r.json()).profile;closeModal('profile-modal');renderWalletCard();
+    toast(`Profile created: ${username}`,'success');
+    publishActivityPost(`Joined Initia Pulse as ${username}`,'milestone');
+  }catch(e){toast('Failed to create profile','error');}
+}
+
+/* ── FEED ── */
+async function loadFeed(reset=false){
+  if(reset){currentOffset=0;posts=[];}
+  try{
+    const r=await fetch(`${API}/feed?limit=20&offset=${currentOffset}&filter=${currentFilter}`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    const data=await r.json();
+    if(reset||currentOffset===0)posts=data.posts;else posts=[...posts,...data.posts];
+    renderFeed();
+    document.getElementById('feed-count').textContent=`${data.total} posts`;
+    document.getElementById('live-stats').textContent=`${data.total} posts`;
+    document.getElementById('load-more-btn').style.display=data.has_more?'inline-block':'none';
+  }catch(e){
+    document.getElementById('feed-container').innerHTML='<div class="empty-state">Could not reach backend.<small>Make sure uvicorn is running on port 8000.</small></div>';
+  }
+}
 function loadMore(){currentOffset+=20;loadFeed();}
 function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadFeed(true);}
-function renderFeed(){const c=document.getElementById('feed-container');if(!posts.length){c.innerHTML='<div class="empty-state">No dispatches yet.<small>Be the first to post.</small></div>';return;}c.innerHTML=posts.map((p,i)=>{const av=(p.author||'A').slice(5,7).toUpperCase();const tc=p.post_type==='activity'?'activity':p.post_type==='milestone'?'milestone':'';return`<article class="post-card" style="animation-delay:${i*.04}s"><div class="post-byline"><div class="post-avatar">${av}</div><div class="post-author-info"><div class="post-username">${short(p.author)}</div><div class="post-addr">${(p.author||'').slice(0,20)}...</div></div><div class="post-time">${relTime(p.timestamp)}</div></div><span class="post-tag ${tc}">${p.post_type==='activity'?'On-Chain Activity':p.post_type==='milestone'?'Milestone':'Text'}</span><div class="post-body">${escHtml(p.content)}</div><div class="post-footer"><button class="post-action" onclick="lookupAddress('${p.author}')">View Profile</button><button class="post-action" onclick="followAddress('${p.author}')">+ Follow</button></div></article>`;}).join('');}
-async function publishPost(){if(!wallet){toast('Connect wallet first','error');return;}const content=document.getElementById('post-content').value.trim();if(!content)return;document.getElementById('publish-btn').disabled=true;try{await fetch(`${API}/post`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({author:wallet.address,content,post_type:document.querySelector('input[name="ptype"]:checked').value,app_context:''})});document.getElementById('post-content').value='';updateCounter();toast(sessionActive?'Posted (auto-signed)':'Post published','success');await loadFeed(true);}catch(e){toast('Failed to publish','error');}document.getElementById('publish-btn').disabled=false;}
-async function publishActivityPost(content,ptype='activity'){if(!wallet)return;try{await fetch(`${API}/post`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({author:wallet.address,content,post_type:ptype,app_context:CHAIN_ID})});await loadFeed(true);}catch(e){}}
-function updateCounter(){const len=document.getElementById('post-content').value.length;const el=document.getElementById('post-counter');el.textContent=280-len;el.className='post-counter'+(len>240?' warn':'');}
-function showRepModal(){if(wallet)document.getElementById('rep-addr-input').value=wallet.address;document.getElementById('rep-result').style.display='none';document.getElementById('rep-modal').style.display='flex';}
-async function computeRep(){const addr=document.getElementById('rep-addr-input').value.trim();if(!addr)return;toast('Analysing wallet with AI...');try{const r=await fetch(`${API}/reputation`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({address:addr,force_refresh:true})});const rep=await r.json();const traits=(rep.traits||[]).map(t=>`<span class="trait-chip">${t}</span>`).join('');document.getElementById('rep-output').innerHTML=`<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px;"><span style="font-family:var(--serif);font-size:36px;font-style:italic;">${rep.score||0}</span><span style="font-family:var(--mono);font-size:11px;color:var(--muted);">/ 1000</span><span class="rep-badge">${rep.rank||'Newcomer'}</span></div><p class="rep-summary">${rep.summary||''}</p><div style="margin-bottom:8px;">${traits}</div>${rep.weekly_digest?`<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px;border-top:1px solid var(--rule);padding-top:8px;">${rep.weekly_digest}</div>`:''}`;document.getElementById('rep-result').style.display='block';if(wallet&&addr===wallet.address)updateRepCard(rep);}catch(e){toast('Reputation engine unreachable','error');}}
-async function computeRepFor(addr){try{const r=await fetch(`${API}/reputation`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({address:addr})});const rep=await r.json();updateRepCard(rep);}catch(e){}}
-function updateRepCard(rep){if(!rep||!rep.score)return;const traits=(rep.traits||[]).map(t=>`<span class="trait-chip">${t}</span>`).join('');document.getElementById('rep-card-container').innerHTML=`<div class="rep-card"><div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:var(--serif);font-size:28px;font-style:italic;">${rep.score}</span><span style="font-family:var(--mono);font-size:9px;color:var(--muted);">/ 1000</span><span class="rep-badge">${rep.rank}</span></div><div class="rep-summary">${rep.summary||''}</div><div style="margin-top:8px;">${traits}</div></div>`;renderWalletCard();}
-async function loadLeaderboard(){try{const r=await fetch(`${API}/leaderboard?limit=8`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });const data=await r.json();const lb=data.leaderboard||[];document.getElementById('leaderboard-list').innerHTML=lb.length?lb.map((e,i)=>`<div class="leaderboard-row" onclick="lookupAddress('${e.address}')"><div class="lb-rank ${i<3?'top':''}">${i+1}</div><div class="lb-info"><div class="lb-name">${short(e.address)}</div><div class="lb-score">${e.score} pts · ${e.rank||''}</div></div><div class="lb-badge-small">${(e.rank||'').slice(0,3).toUpperCase()}</div></div>`).join(''):'<div style="font-family:var(--mono);font-size:10px;color:var(--muted);">No scores yet.</div>';}catch(e){}}
-async function loadNetworkStats(){try{const r=await fetch(`${API}/health`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });const data=await r.json();document.getElementById('network-stats').innerHTML=`Chain: ${CHAIN_ID}<br>Posts: ${data.posts||0}<br>Profiles: ${data.profiles||0}<br>Status: <span style="color:var(--accent2);">Live</span>`;document.getElementById('live-stats').textContent=`${data.posts||0} posts · ${data.profiles||0} wallets`;}catch(e){document.getElementById('network-stats').innerHTML=`Status: <span style="color:var(--accent);">Offline</span><br><span style="font-size:9px;">Start backend on :8000</span>`;}}
-function switchTab(tab,btn){document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(tab==='feed'){currentFilter='all';loadFeed(true);}else if(tab==='following'){if(!wallet){toast('Connect wallet first','error');return;}loadFollowingFeed();}else if(tab==='leaderboard'){loadLeaderboard();}else if(tab==='activity'){if(!wallet){toast('Connect wallet first','error');return;}loadMyActivity();}}
-async function loadFollowingFeed(){if(!wallet)return;try{const r=await fetch(`${API}/feed/following/${wallet.address}`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });const data=await r.json();posts=data.posts;renderFeed();document.getElementById('feed-count').textContent=`${posts.length} posts from ${data.following_count} accounts`;}catch(e){}}
-async function loadMyActivity(){if(!wallet)return;try{const r=await fetch(`${API}/activity/${wallet.address}?limit=15`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });const data=await r.json();posts=data.transactions.map((tx,i)=>({id:`tx-${i}`,author:wallet.address,content:`${tx.type}: on-chain action`,post_type:'activity',timestamp:tx.timestamp,tx_hash:tx.hash}));renderFeed();document.getElementById('feed-count').textContent=`${data.count} on-chain actions`;}catch(e){}}
+
+function renderFeed(){
+  const c=document.getElementById('feed-container');
+  if(!posts.length){c.innerHTML='<div class="empty-state">No dispatches yet.<small>Be the first to post.</small></div>';return;}
+  c.innerHTML=posts.map((p,i)=>{
+    const likedClass=likedPosts.has(p.id)?'liked':'';
+    const likeCount=(p.likes||0)>0?` ${p.likes}`:'';
+    const av=(p.author||'A').slice(5,7).toUpperCase();
+    const tc=p.post_type==='activity'?'activity':p.post_type==='milestone'?'milestone':'';
+    return`<article class="post-card" style="animation-delay:${i*.04}s">
+      <div class="post-byline">
+        <div class="post-avatar">${av}</div>
+        <div class="post-author-info">
+          <div class="post-username">${short(p.author)}</div>
+          <div class="post-addr">${(p.author||'').slice(0,22)}...</div>
+        </div>
+        <div class="post-time">${relTime(p.timestamp)}</div>
+      </div>
+      <span class="post-tag ${tc}">${p.post_type==='activity'?'On-Chain Activity':p.post_type==='milestone'?'Milestone':'Text'}</span>
+      <div class="post-body">${escHtml(p.content)}</div>
+      <div class="post-footer">
+        <button class="post-action ${likedClass}" id="like-btn-${p.id}" onclick="likePost('${p.id}',this)">♥ Like</button><span class="like-count" id="like-count-${p.id}">${likeCount}</span>
+        <button class="post-action" onclick="lookupAddress('${p.author}')">View Profile</button>
+        <button class="post-action" onclick="followAddress('${p.author}')">+ Follow</button>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+async function publishPost(){
+  if(!wallet){toast('Connect wallet first','error');return;}
+  const content=document.getElementById('post-content').value.trim();if(!content)return;
+  document.getElementById('publish-btn').disabled=true;
+  try{
+    await fetch(`${API}/post`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({author:wallet.address,content,post_type:document.querySelector('input[name="ptype"]:checked').value,app_context:''})});
+    document.getElementById('post-content').value='';updateCounter();
+    toast(sessionActive?'Posted (auto-signed)':'Post published','success');
+    await loadFeed(true);
+  }catch(e){toast('Failed to publish','error');}
+  document.getElementById('publish-btn').disabled=false;
+}
+
+async function publishActivityPost(content,ptype='activity'){
+  if(!wallet)return;
+  try{await fetch(`${API}/post`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({author:wallet.address,content,post_type:ptype,app_context:CHAIN_ID})});await loadFeed(true);}catch(e){}
+}
+
+function updateCounter(){
+  const len=document.getElementById('post-content').value.length;
+  const el=document.getElementById('post-counter');el.textContent=280-len;el.className='post-counter'+(len>240?' warn':'');
+}
+
+/* ── REPUTATION ── */
+function showRepModal(){
+  if(wallet)document.getElementById('rep-addr-input').value=wallet.address;
+  document.getElementById('rep-result').style.display='none';
+  document.getElementById('rep-modal').style.display='flex';
+}
+
+async function computeRep(){
+  const addr=document.getElementById('rep-addr-input').value.trim();if(!addr)return;
+  toast('Analysing wallet with AI...');
+  try{
+    const r=await fetch(`${API}/reputation`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({address:addr,force_refresh:true})});
+    const rep=await r.json();
+    const traits=(rep.traits||[]).map(t=>`<span class="trait-chip">${t}</span>`).join('');
+    document.getElementById('rep-output').innerHTML=`
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px;">
+        <span style="font-family:var(--serif);font-size:36px;font-style:italic;">${rep.score||0}</span>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">/ 1000</span>
+        <span class="rep-badge">${rep.rank||'Newcomer'}</span>
+      </div>
+      <p class="rep-summary">${rep.summary||''}</p>
+      <div style="margin-bottom:8px;">${traits}</div>
+      ${rep.weekly_digest?`<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px;border-top:1px solid var(--rule);padding-top:8px;">${rep.weekly_digest}</div>`:''}`;
+    document.getElementById('rep-result').style.display='block';
+    if(wallet&&addr===wallet.address)updateRepCard(rep);
+  }catch(e){toast('Reputation engine unreachable','error');}
+}
+
+async function computeRepFor(addr){
+  try{
+    const r=await fetch(`${API}/reputation`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({address:addr})});
+    const rep=await r.json();updateRepCard(rep);
+  }catch(e){}
+}
+
+function updateRepCard(rep){
+  if(!rep||!rep.score)return;
+  const traits=(rep.traits||[]).map(t=>`<span class="trait-chip">${t}</span>`).join('');
+  document.getElementById('rep-card-container').innerHTML=`
+    <div class="rep-card">
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span style="font-family:var(--serif);font-size:28px;font-style:italic;">${rep.score}</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted);">/ 1000</span>
+        <span class="rep-badge">${rep.rank}</span>
+      </div>
+      <div class="rep-summary">${rep.summary||''}</div>
+      <div style="margin-top:8px;">${traits}</div>
+    </div>`;
+  renderWalletCard();
+}
+
+/* ── LEADERBOARD ── */
+async function loadLeaderboard(){
+  try{
+    const r=await fetch(`${API}/leaderboard?limit=8`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    const data=await r.json();const lb=data.leaderboard||[];
+    document.getElementById('leaderboard-list').innerHTML=lb.length
+      ?lb.map((e,i)=>`<div class="leaderboard-row" onclick="lookupAddress('${e.address}')">
+          <div class="lb-rank ${i<3?'top':''}">${i+1}</div>
+          <div class="lb-info"><div class="lb-name">${short(e.address)}</div><div class="lb-score">${e.score} pts · ${e.rank||''}</div></div>
+          <div class="lb-badge-small">${(e.rank||'').slice(0,3).toUpperCase()}</div>
+        </div>`).join('')
+      :'<div style="font-family:var(--mono);font-size:10px;color:var(--muted);">No scores yet.</div>';
+  }catch(e){}
+}
+
+/* ── NETWORK STATS ── */
+async function loadNetworkStats(){
+  try{
+    const r=await fetch(`${API}/health`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    const data=await r.json();
+    document.getElementById('stat-posts').textContent=data.posts||0;
+    document.getElementById('stat-profiles').textContent=data.profiles||0;
+    document.getElementById('stat-status').textContent='Live';
+    document.getElementById('stat-status').className='status-live';
+    document.getElementById('live-stats').textContent=`${data.posts||0} posts · ${data.profiles||0} wallets`;
+  }catch(e){
+    document.getElementById('stat-status').textContent='Offline';
+    document.getElementById('stat-status').className='status-offline';
+  }
+}
+
+/* ── TABS ── */
+function switchTab(tab,btn){
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(tab==='feed'){currentFilter='all';loadFeed(true);}
+  else if(tab==='following'){if(!wallet){toast('Connect wallet first','error');return;}loadFollowingFeed();}
+  else if(tab==='leaderboard'){loadLeaderboard();}
+  else if(tab==='activity'){if(!wallet){toast('Connect wallet first','error');return;}loadMyActivity();}
+}
+
+async function loadFollowingFeed(){
+  if(!wallet)return;
+  try{
+    const r=await fetch(`${API}/feed/following/${wallet.address}`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    const data=await r.json();posts=data.posts;renderFeed();
+    document.getElementById('feed-count').textContent=`${posts.length} posts from ${data.following_count} accounts`;
+  }catch(e){}
+}
+
+async function loadMyActivity(){
+  if(!wallet)return;
+  try{
+    const r=await fetch(`${API}/activity/${wallet.address}?limit=15`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    const data=await r.json();
+    posts=data.transactions.map((tx,i)=>({id:`tx-${i}`,author:wallet.address,content:`${tx.type}: on-chain action`,post_type:'activity',timestamp:tx.timestamp,tx_hash:tx.hash}));
+    renderFeed();document.getElementById('feed-count').textContent=`${data.count} on-chain actions`;
+  }catch(e){}
+}
+
+/* ── LOOKUP / FOLLOW ── */
 async function lookupProfile(){const q=document.getElementById('lookup-input').value.trim();if(q)await lookupAddress(q);}
-async function lookupAddress(addr){try{let resolved=addr;if(addr.includes('.init')){const r=await fetch(`${API}/resolve/${addr}`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });if(r.ok)resolved=(await r.json()).address;}const r=await fetch(`${API}/profile/${resolved}`, { headers: { 'ngrok-skip-browser-warning': '1', 'Content-Type': 'application/json' } });if(r.ok){const p=await r.json();toast(`${p.username||short(resolved)} — Score: ${p.reputation?.score||'N/A'}`);}else{toast(`No profile. Computing reputation...`);await fetch(`${API}/reputation`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({address:resolved})});loadLeaderboard();}}catch(e){toast('Lookup failed','error');}}
-async function followAddress(addr){if(!wallet){toast('Connect wallet first','error');return;}if(addr===wallet.address){toast("Can't follow yourself",'error');return;}try{await fetch(`${API}/follow`,{method:'POST',headers:{ 'ngrok-skip-browser-warning': '1','Content-Type':'application/json'},body:JSON.stringify({follower:wallet.address,followee:addr})});toast(`Following ${short(addr)}`,'success');}catch(e){toast('Follow failed','error');}}
+
+async function lookupAddress(addr){
+  try{
+    let resolved=addr;
+    if(addr.includes('.init')){const r=await fetch(`${API}/resolve/${addr}`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});if(r.ok)resolved=(await r.json()).address;}
+    const r=await fetch(`${API}/profile/${resolved}`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
+    if(r.ok){const p=await r.json();toast(`${p.username||short(resolved)} — Score: ${p.reputation?.score||'N/A'}`);}
+    else{toast('No profile. Computing reputation...');await fetch(`${API}/reputation`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({address:resolved})});loadLeaderboard();}
+  }catch(e){toast('Lookup failed','error');}
+}
+
+async function followAddress(addr){
+  if(!wallet){toast('Connect wallet first','error');return;}
+  if(addr===wallet.address){toast("Can't follow yourself",'error');return;}
+  try{
+    await fetch(`${API}/follow`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({follower:wallet.address,followee:addr})});
+    toast(`Following ${short(addr)}`,'success');
+  }catch(e){toast('Follow failed','error');}
+}
+
+async function likePost(postId,btn){
+  if(!wallet){toast('Connect wallet first','error');return;}
+  const alreadyLiked=likedPosts.has(postId);
+  if(alreadyLiked){
+    likedPosts.delete(postId);
+    btn.classList.remove('liked');
+    btn.textContent='♥ Like';
+    const countEl=document.getElementById('like-count-'+postId);
+    if(countEl){const c=parseInt(countEl.textContent)||0;countEl.textContent=c>1?' '+(c-1):'';}
+  } else {
+    likedPosts.add(postId);
+    btn.classList.add('liked');
+    btn.textContent='♥ Liked';
+    const countEl=document.getElementById('like-count-'+postId);
+    if(countEl){const c=parseInt(countEl.textContent)||0;countEl.textContent=' '+(c+1);}
+    const post=posts.find(p=>p.id===postId);
+    if(post)try{
+      await fetch(`${API}/like`,{method:'POST',headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'},body:JSON.stringify({liker:wallet.address,post_id:postId,author:post.author})});
+    }catch(e){}
+  }
+}
+
+/* ── UTILS ── */
 function closeModal(id){document.getElementById(id).style.display='none';}
 function short(addr){if(!addr)return'anon';if(addr.length<16)return addr;return addr.slice(0,8)+'...'+addr.slice(-6);}
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function relTime(ts){try{const d=Date.now()-new Date(ts).getTime();if(d<60000)return`${Math.floor(d/1000)}s ago`;if(d<3600000)return`${Math.floor(d/60000)}m ago`;if(d<86400000)return`${Math.floor(d/3600000)}h ago`;return new Date(ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'});}catch(e){return'just now';}}
 function randomHex(len){return[...Array(len)].map(()=>Math.floor(Math.random()*16).toString(16)).join('');}
-function toast(msg,type='info'){const tc=document.getElementById('toast-container');const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;tc.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},3500);}
+function toast(msg,type='info'){
+  const tc=document.getElementById('toast-container');
+  const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;tc.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},3500);
+}
 </script>
 </body>
 </html>
