@@ -428,7 +428,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weigh
 
 window.addEventListener('load',function(){setTimeout(function(){document.getElementById('loader').classList.add('hidden');document.getElementById('app').classList.add('visible');},2600);});
 function disconnectWallet(){wallet=null;profile=null;sessionActive=false;document.getElementById('wallet-section').innerHTML='<button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>';document.getElementById('compose-section').style.display='none';document.getElementById('header-wallet').innerHTML='';document.getElementById('rep-card-container').innerHTML='<div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Connect wallet to see score.</div>';toast('Wallet disconnected','info');loadFeed(true);}
-const API='https://e2b3-154-80-36-248.ngrok-free.app';
+const API='https://eugena-global-unincisively.ngrok-free.dev';
 const CHAIN_ID='initia-pulse-1';
 let wallet=null,profile=null,posts=[],currentFilter='all',currentOffset=0,sessionActive=false,likedPosts=new Set();
 
