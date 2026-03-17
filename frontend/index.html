@@ -663,14 +663,16 @@ async function loadNetworkStats(){
   try{
     const r=await fetch(`${API}/health`,{headers:{'ngrok-skip-browser-warning':'1','Content-Type':'application/json'}});
     const data=await r.json();
-    document.getElementById('stat-posts').textContent=data.posts||0;
-    document.getElementById('stat-profiles').textContent=data.profiles||0;
-    document.getElementById('stat-status').textContent='Live';
-    document.getElementById('stat-status').className='status-live';
+    document.getElementById('s-chain').textContent=CHAIN_ID;
+    document.getElementById('s-posts').textContent=data.posts||0;
+    document.getElementById('s-profiles').textContent=data.profiles||0;
+    document.getElementById('s-status').textContent='Live';
+    document.getElementById('s-status').className='stats-value stats-live';
     document.getElementById('live-stats').textContent=`${data.posts||0} posts · ${data.profiles||0} wallets`;
   }catch(e){
-    document.getElementById('stat-status').textContent='Offline';
-    document.getElementById('stat-status').className='status-offline';
+    document.getElementById('s-chain').textContent=CHAIN_ID;
+    document.getElementById('s-status').textContent='Offline';
+    document.getElementById('s-status').className='stats-value stats-offline';
   }
 }
 
