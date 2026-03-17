@@ -1,0 +1,11 @@
+[package]
+name = "InitiaPulse"
+version = "1.0.0"
+authors = ["Shahmeer — INITIATE Hackathon 2026"]
+
+[addresses]
+pulse = "0x814404D795BE26F0A9D8A56C41504C63502CA9B6"
+initia_std = "0x1"
+
+[dependencies]
+InitiaStdlib = { git = "https://github.com/initia-labs/movevm.git", subdir = "precompile/modules/initia_stdlib", rev = "main" }

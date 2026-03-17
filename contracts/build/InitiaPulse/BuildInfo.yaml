@@ -1,0 +1,49 @@
+---
+compiled_package_info:
+  package_name: InitiaPulse
+  address_alias_instantiation:
+    cafe: 000000000000000000000000000000000000000000000000000000000000cafe
+    init_fa: 8e4733bdabcf7d4afc3d14f0dd46c9bf52fb0fce9e4b996c939e195b8bc891d9
+    initia_hooks: "0000000000000000000000000000000000000000000000000000000000000002"
+    initia_std: "0000000000000000000000000000000000000000000000000000000000000001"
+    pulse: 000000000000000000000000814404d795be26f0a9d8a56c41504c63502ca9b6
+    relayer: 0000000000000000000000003d18d54532fc42e567090852db6eb21fa528f952
+    std: "0000000000000000000000000000000000000000000000000000000000000001"
+  source_digest: 47C442F8C572AEC052F051C46D20205D530057948C1CC0C78AC6FE9CAA439DD5
+  build_flags:
+    dev_mode: false
+    test_mode: false
+    override_std: ~
+    generate_docs: false
+    generate_abis: false
+    generate_move_model: true
+    full_model_generation: false
+    install_dir: "."
+    force_recompilation: false
+    additional_named_addresses: {}
+    fetch_deps_only: false
+    skip_fetch_latest_git_deps: false
+    compiler_config:
+      bytecode_version: 7
+      known_attributes:
+        - bytecode_instruction
+        - deprecated
+        - event
+        - expected_failure
+        - "lint::skip"
+        - module_lock
+        - native_interface
+        - persistent
+        - test
+        - test_only
+        - verify_only
+        - view
+      skip_attribute_checks: false
+      compiler_version: V2_0
+      language_version: V2_1
+      experiments: []
+dependencies:
+  - InitiaStdlib
+  - MoveNursery
+  - MoveStdlib
+bytecode_deps: []

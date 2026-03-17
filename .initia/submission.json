@@ -1,0 +1,12 @@
+{
+  "project_name": "Initia Pulse",
+  "repo_url": "https://github.com/YOUR_USERNAME/initia-pulse",
+  "commit_sha": "FILL_AFTER_FINAL_COMMIT",
+  "rollup_chain_id": "initia-pulse-1",
+  "deployed_address": "0x814404D795BE26F0A9D8A56C41504C63502CA9B6",
+  "vm": "move",
+  "native_feature": "auto-signing",
+  "core_logic_path": "contracts/sources/pulse.move",
+  "native_feature_frontend_path": "frontend/index.html",
+  "demo_video_url": "FILL_AFTER_RECORD"
+}
